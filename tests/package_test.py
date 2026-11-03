@@ -76,6 +76,16 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(archive.read("images/diagram.svg"), b"<svg/>")
             self.assertNotIn("src/images/diagram.svg", archive.namelist())
 
+    def test_equivalent_source_paths_use_one_normalized_base(self):
+        self.manifest()
+        # [FR] Simuler une base équivalente mais non normalisée, comme les alias temporaires Windows.
+        # [EN] Simulate an equivalent but unnormalized base, like Windows temporary-directory aliases.
+        packager.SOURCE = self.source / ".." / "src"
+        self.build()
+        with ZipFile(packager.OUTPUT) as archive:
+            self.assertIn("index.html", archive.namelist())
+            self.assertIn("imsmanifest.xml", archive.namelist())
+
     def test_missing_asset_preserves_the_previous_archive(self):
         self.manifest("missing.html")
         packager.OUTPUT.parent.mkdir()

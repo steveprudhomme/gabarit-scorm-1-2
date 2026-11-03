@@ -30,8 +30,11 @@ def safe_file(reference):
 
 
 def build():
-    manifest = ET.parse(SOURCE / "imsmanifest.xml")
-    files = {SOURCE / "imsmanifest.xml"}
+    # [FR] Normaliser une seule base : Windows peut donner deux noms équivalents au même dossier temporaire.
+    # [EN] Normalize one base: Windows may give the same temporary directory two equivalent names.
+    source_root = SOURCE.resolve()
+    manifest = ET.parse(source_root / "imsmanifest.xml")
+    files = {source_root / "imsmanifest.xml"}
     # [FR] Le manifeste est la source de vérité : inventorier aussi chaque point d'entrée.
     # [EN] The manifest is the source of truth: include every launch entry point too.
     for resource in manifest.findall("cp:resources/cp:resource", NS):
@@ -45,7 +48,7 @@ def build():
         files.add(safe_file(name))
     # [FR] Les mentions légales accompagnent toute distribution ; seules ces deux sources fixes viennent de la racine.
     # [EN] Legal notices accompany every distribution; only these two fixed source files come from the root.
-    entries = {path.relative_to(SOURCE).as_posix(): path for path in files}
+    entries = {path.relative_to(source_root).as_posix(): path for path in files}
     for name in ["LICENSE.md", "THIRD_PARTY_NOTICES.md"]:
         legal_file = (ROOT / name).resolve()
         if not legal_file.is_relative_to(ROOT.resolve()) or not legal_file.is_file():

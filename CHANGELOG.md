@@ -17,6 +17,10 @@ Cet historique conserve les étapes du projet et les évolutions à venir, dans 
 - Les guides, explications, exemples et documents normatifs originaux sont conservés. Les fichiers générés existants restent sur le poste de travail et dans l'historique Git antérieur.
 - Le dépôt devient public le 2 novembre 2026, à la demande de son propriétaire.
 
+### Corrections
+
+- Normalisation cohérente des chemins du générateur, y compris lorsque Windows utilise un alias court pour un dossier temporaire ; ajout d'un test de régression.
+
 ## 2026-11-02 — Séparation de la capsule et du dépôt
 
 - Déplacement des fichiers SCORM dans `src/` et des guides dans `doc/`.
