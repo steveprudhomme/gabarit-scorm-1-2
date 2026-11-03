@@ -1,0 +1,87 @@
+name: Verifications SCORM 1.2
+
+# [FR] Contrôler les propositions et main ; permettre aussi un lancement manuel.
+# [EN] Check pull requests and main; also allow manual runs.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# [FR] Les contrôles lisent le dépôt ; ils ne publient ni ne fusionnent de code.
+# [EN] Checks read the repository; they neither publish nor merge code.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Sources, tests, XML et paquetage
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      # [FR] Versions officielles fixées par identifiant complet pour rendre les outils vérifiables.
+      # [EN] Official versions pinned to full commit identifiers to keep tooling verifiable.
+      - name: Sources / Checkout v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Node 22 / setup-node v7.1.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Python 3.13 / setup-python v7.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.13'
+      - name: Syntaxe du moteur / Engine syntax
+        run: node --check src/scorm_api_wrapper.js
+      - name: Syntaxe des activites / Activity syntax
+        run: node --check src/demo.js
+      - name: Tests du moteur / Engine tests
+        run: node tests/scorm.test.cjs
+      - name: Tests du ZIP / Package tests
+        run: python tests/package_test.py
+      - name: Tests du controle DCO / DCO checker tests
+        run: python tests/dco_test.py
+      - name: Style des fichiers editables / Editable file style
+        run: python tools/check-style.py
+      - name: Validation XML / XML validation
+        run: ./tools/validate.ps1
+      - name: Generer le ZIP / Build the package
+        run: python tools/package.py
+      - name: Contenu et liens / Content and links
+        run: python tools/check-content.py
+      - name: Conserver le ZIP / Store the package v7.0.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gabarit-scorm12-${{ github.sha }}
+          path: dist/gabarit-scorm12.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  dco:
+    name: Attestations DCO des nouveaux commits
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Historique / Checkout v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # [FR] Les SHA passent par des variables et sont validés par le script ; aucun texte de ticket n'est exécuté.
+      # [EN] SHAs pass through variables and are validated by the script; no issue text is executed.
+      - name: Verifier les attestations / Check sign-offs
+        env:
+          DCO_BASE: ${{ github.event.pull_request.base.sha }}
+          DCO_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: python3 tools/check-dco.py --base "$DCO_BASE" --head "$DCO_HEAD"

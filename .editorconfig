@@ -1,0 +1,31 @@
+# [FR] Règles communes pour les fichiers éditables du projet.
+# [EN] Shared rules for the project's editable files.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{html,css,yml,yaml}]
+indent_size = 2
+
+# [FR] Ne pas reformater automatiquement les documents tiers ni les textes officiels.
+# [EN] Do not automatically reformat third-party documents or official texts.
+[*.xsd]
+indent_style = unset
+indent_size = unset
+trim_trailing_whitespace = false
+
+[LICENSE.md]
+indent_style = unset
+indent_size = unset
+trim_trailing_whitespace = false
+
+[references/**]
+indent_style = unset
+indent_size = unset
+trim_trailing_whitespace = false
