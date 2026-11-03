@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Un atelier SCORM 1.2 en HTML, CSS et JavaScript : créez, testez et adaptez votre première capsule.">
+  <title>Atelier SCORM 1.2 · Gabarit pédagogique</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- [FR] defer garantit le chargement du moteur avant la démonstration, après lecture du HTML. -->
+  <!-- [EN] defer loads the engine before the demo, after the HTML has been parsed. -->
+  <script src="scorm_api_wrapper.js" defer></script>
+  <script src="demo.js" defer></script>
+</head>
+<body>
+  <a href="#contenu" class="skip">Aller au contenu</a>
+  <header class="app-header">
+    <div class="brand"><span class="brand-icon" aria-hidden="true">↗</span> l’atelier <span class="desktop">/ SCORM</span></div>
+    <div class="header-meta"><span class="desktop">HTML · CSS · JavaScript</span><span id="connection" class="pill">Connexion…</span></div>
+  </header>
+  <div class="shell">
+    <aside aria-label="Parcours de démonstration">
+      <p class="eyebrow">Votre terrain d’essai</p>
+      <nav class="side-nav" aria-label="Sections">
+        <a href="#decouvrir" aria-current="location"><span class="nav-num">01</span> Découvrir</a>
+        <a href="#pratiquer"><span class="nav-num">02</span> Pratiquer</a>
+        <a href="#reprendre"><span class="nav-num">03</span> Sauvegarder</a>
+        <a href="#explorer"><span class="nav-num">04</span> Explorer les données</a>
+        <a href="#terminer"><span class="nav-num">05</span> Terminer</a>
+      </nav>
+      <div class="aside-note"><strong>Apprendre en faisant.</strong><br>Essayez une activité, observez le suivi, puis copiez son exemple dans votre capsule.<br><br>Les repères « Bloc à copier » se retrouvent aussi dans les fichiers source.</div>
+    </aside>
+    <main id="contenu">
+      <noscript><p class="status-box error">Activez JavaScript pour communiquer avec le LMS et utiliser les activités.</p></noscript>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Gabarit ouvert · Sans dépendance · SCORM 1.2</p>
+        <div class="hero-heading"><h1 id="page-title">Votre première capsule.<br>Tout pour bien commencer.</h1><div class="version-stamp" aria-hidden="true">ADL SCORM<strong>1.2</strong>VANILLA JS</div></div>
+        <p>Un espace pour comprendre le suivi pédagogique, tester huit familles d’activités et repartir avec des blocs de code prêts à adapter.</p>
+      </section>
+      <!-- ================================================================ -->
+      <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Tableau de bord apprenant -->
+      <!-- [EN] START OF COPY-PASTE BLOCK: Learner dashboard -->
+      <!-- ================================================================ -->
+      <dl class="metrics" aria-label="Données actuelles du LMS">
+        <div class="metric"><dt>Apprenant</dt><dd id="learner-name">—</dd><small id="learner-id">cmi.core.student_name</small></div>
+        <div class="metric"><dt>Statut de la capsule</dt><dd id="lesson-status">—</dd><small>cmi.core.lesson_status</small></div>
+        <div class="metric"><dt>Dernier marque-page</dt><dd id="bookmark">—</dd><small>cmi.core.lesson_location</small></div>
+        <div class="metric"><dt>Score envoyé</dt><dd id="score">—</dd><small id="session-clock">Session : 0000:00:00.00</small></div>
+      </dl>
+      <!-- [FR] FIN DU BLOC À COPIER-COLLER : Tableau de bord apprenant -->
+      <!-- [EN] END OF COPY-PASTE BLOCK: Learner dashboard -->
+      <div id="mode-notice" class="notice">Connexion au suivi en cours…</div>
+      <div id="startup-error" class="status-box error" role="alert" hidden></div>
+      <div id="work-area">
+        <section id="decouvrir" class="section" aria-labelledby="navigation-title">
+          <div class="section-heading"><h2 id="navigation-title">01. Découvrir à votre rythme</h2><span class="copy-tag">Un écran = un marque-page</span></div>
+          <!-- ================================================================ -->
+          <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Navigation avec marque-page -->
+          <!-- [EN] START OF COPY-PASTE BLOCK: Navigation with bookmarking -->
+          <!-- ================================================================ -->
+          <article class="card">
+            <div class="card-top"><span class="step-tag">Navigation</span><span class="copy-tag">Bloc à copier · navigate()</span></div>
+            <div class="progress-row"><span id="slide-counter" class="slide-counter">Écran 1 / 3</span><span class="muted" id="visited-count">1 écran exploré</span></div>
+            <progress id="slide-progress" value="1" max="3" aria-label="Écrans explorés"></progress>
+            <div class="slide" aria-live="polite"><h3 id="slide-title">Un petit colis, une grande autonomie.</h3><p id="slide-body">Le manifeste décrit le contenu de votre capsule. Le LMS ouvre ensuite index.html, votre porte d’entrée.</p></div>
+            <div class="actions"><button id="previous" class="button secondary" type="button" data-session>← Précédent</button><button id="next" class="button" type="button" data-session>Suivant →</button></div>
+            <details><summary>Voir le code à copier</summary><pre><code id="code-navigation">function navigate(slideId) {
+  // [FR] Remplacer slide-2 par l'identifiant de votre écran.
+  // [EN] Replace slide-2 with your own screen identifier.
+  if (SCORM12.setBookmark(slideId)) return SCORM12.commit();
+  return false;
+}
+navigate("slide-2");</code></pre><button class="button secondary" data-copy="code-navigation" type="button">Copier le code</button></details>
+          </article>
+          <!-- [FR] FIN DU BLOC À COPIER-COLLER : Navigation avec marque-page -->
+          <!-- [EN] END OF COPY-PASTE BLOCK: Navigation with bookmarking -->
+        </section>
+        <section id="pratiquer" class="section" aria-labelledby="activities-title">
+          <div class="section-heading"><h2 id="activities-title">02. Apprendre en pratiquant</h2><span class="copy-tag">Les 8 types d’interactions 1.2</span></div>
+          <div class="columns">
+            <!-- ================================================================ -->
+            <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : QCM, score et interaction -->
+            <!-- [EN] START OF COPY-PASTE BLOCK: Multiple choice, score and interaction -->
+            <!-- ================================================================ -->
+            <article class="card">
+              <div class="card-top"><span class="step-tag">Question à choix</span><span class="copy-tag">Bloc à copier · submitQuiz()</span></div>
+              <form id="quiz-form"><fieldset><legend>Quel fichier le LMS lit-il pour découvrir votre capsule ?</legend>
+                <label><input type="radio" name="quiz" value="a" required data-session> index.html</label>
+                <label><input type="radio" name="quiz" value="b" required data-session> imsmanifest.xml</label>
+                <label><input type="radio" name="quiz" value="c" required data-session> styles.css</label>
+              </fieldset><button class="button" type="submit" data-session>Valider ma réponse</button></form>
+              <p id="quiz-feedback" class="status-box" aria-live="polite">Le score est calculé ici, puis transmis au LMS.</p>
+              <details><summary>Voir le code à copier</summary><pre><code id="code-quiz">const answer = "b";
+const score = SCORM12.setScore(answer === "b" ? 100 : 0, 0, 100);
+const interaction = SCORM12.recordInteraction({
+  id: "question_manifeste", type: "choice",
+  correctResponses: ["b"], studentResponse: answer,
+  result: answer === "b" ? "correct" : "wrong",
+  weighting: 1, latency: "0000:00:05.00"
+});
+const committed = SCORM12.commit();
+// [FR] Examiner les trois résultats ; des champs peuvent être optionnels.
+// [EN] Check all three results; some fields can be optional.
+console.log(score, interaction, committed);</code></pre><button type="button" class="button secondary" data-copy="code-quiz">Copier le code</button></details>
+            </article>
+            <!-- [FR] FIN DU BLOC À COPIER-COLLER : QCM, score et interaction -->
+            <!-- [EN] END OF COPY-PASTE BLOCK: Multiple choice, score and interaction -->
+            <!-- ================================================================ -->
+            <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Fabrique des huit activités -->
+            <!-- [EN] START OF COPY-PASTE BLOCK: Eight-activity workshop -->
+            <!-- ================================================================ -->
+            <article class="card">
+              <div class="card-top"><span class="step-tag">Laboratoire d’activités</span><span class="copy-tag">Bloc à copier · submitActivity()</span></div>
+              <label for="activity-type">Choisissez une activité</label>
+              <select id="activity-type" data-session>
+                <option value="true-false">Vrai ou faux · true-false</option><option value="choice">Choix multiples · choice</option><option value="fill-in">Texte à compléter · fill-in</option><option value="matching">Association · matching</option><option value="performance">Mise en situation · performance</option><option value="sequencing">Remise en ordre · sequencing</option><option value="likert">Échelle d’opinion · likert</option><option value="numeric">Réponse numérique · numeric</option>
+              </select>
+              <form id="activity-form"><div id="activity-content"></div><div class="actions"><button class="button" type="submit" data-session>Tester cette activité</button></div></form>
+              <output id="activity-feedback" class="status-box" aria-live="polite">Une activité, une trace détaillée dans le LMS.</output>
+              <details><summary>Voir le code de cette activité</summary><pre><code id="code-activity"></code></pre><button type="button" class="button secondary" data-copy="code-activity">Copier le code</button></details>
+            </article>
+            <!-- [FR] FIN DU BLOC À COPIER-COLLER : Fabrique des huit activités -->
+            <!-- [EN] END OF COPY-PASTE BLOCK: Eight-activity workshop -->
+          </div>
+          <p class="notice">SCORM enregistre des traces. La correction, le glisser-déposer, les scénarios ou la lecture d’une vidéo se programment dans la capsule. Les huit activités ci-dessus sont des exemples HTML accessibles ; elles ne forment pas une liste fermée de possibilités pédagogiques.</p>
+        </section>
+        <section id="reprendre" class="section" aria-labelledby="save-title">
+          <div class="section-heading"><h2 id="save-title">03. Retrouver le fil</h2><span class="copy-tag">Une pause, puis une reprise</span></div>
+          <!-- ================================================================ -->
+          <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Sauvegarde JSON de la progression -->
+          <!-- [EN] START OF COPY-PASTE BLOCK: JSON progress persistence -->
+          <!-- ================================================================ -->
+          <article class="card">
+            <div class="card-top"><span class="step-tag">Données de suspension</span><span class="copy-tag">Bloc à copier · saveProgress()</span></div>
+            <label for="reflection">Votre idée à retenir</label><textarea id="reflection" rows="3" maxlength="1800" placeholder="Écrivez ici : votre note sera restaurée à la reprise." data-session></textarea>
+            <div class="progress-row"><p class="muted">Les accents sont préservés grâce à un JSON ASCII.</p><p id="state-size" class="muted">0 / 4096</p></div>
+            <div class="actions"><button id="save-progress" class="button" type="button" data-session>Sauvegarder ma progression</button><button id="restore-progress" class="button secondary" type="button" data-session>Relire la sauvegarde</button></div>
+            <details><summary>Voir le code à copier</summary><pre><code id="code-state">const state = {
+  version: 1, slide: 2, visited: [1, 2],
+  reflection: "J’ai compris le rôle du manifeste.",
+  answers: { question_manifeste: "b" }
+};
+const saved = SCORM12.saveState(state);
+if (saved) SCORM12.commit();
+const restored = SCORM12.loadState({ version: 1 });
+// [FR] Vérifier version et champs avant de modifier votre interface.
+// [EN] Check version and fields before updating your interface.
+console.log(restored);</code></pre><button type="button" class="button secondary" data-copy="code-state">Copier le code</button></details>
+          </article>
+          <!-- [FR] FIN DU BLOC À COPIER-COLLER : Sauvegarde JSON de la progression -->
+          <!-- [EN] END OF COPY-PASTE BLOCK: JSON progress persistence -->
+        </section>
+        <section id="explorer" class="section" aria-labelledby="data-title">
+          <div class="section-heading"><h2 id="data-title">04. Ouvrir la boîte à outils</h2><span class="copy-tag">Éléments optionnels inclus</span></div>
+          <div class="columns">
+            <!-- ================================================================ -->
+            <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Objectif pédagogique -->
+            <!-- [EN] START OF COPY-PASTE BLOCK: Learning objective -->
+            <!-- ================================================================ -->
+            <article class="card">
+              <span class="step-tag">Objectifs</span><h3>Suivre un acquis précis</h3>
+              <p class="muted">L’objectif « comprendre le manifeste » possède son propre score et son statut. Il ne modifie pas automatiquement ceux de la capsule.</p>
+              <div class="small-grid"><div><label for="objective-score">Score de l’objectif</label><input id="objective-score" type="number" min="0" max="100" value="80" data-session></div><div><label for="objective-status">Statut de l’objectif</label><select id="objective-status" data-session><option>passed</option><option>completed</option><option>failed</option><option>incomplete</option><option>browsed</option><option>not attempted</option></select></div></div>
+              <div class="actions"><button id="save-objective" class="button" type="button" data-session>Enregistrer l’objectif</button><button id="read-objective" class="button secondary" type="button" data-session>Relire les objectifs</button></div>
+              <pre><code id="code-objective">const report = SCORM12.setObjective({
+  id: "comprendre_manifeste", raw: 80,
+  min: 0, max: 100, status: "passed"
+});
+const committed = SCORM12.commit();
+console.log(report, committed);</code></pre><button type="button" class="button secondary" data-copy="code-objective">Copier le code</button>
+              <output id="objective-feedback" class="status-box" aria-live="polite">Les objectifs sont optionnels pour le LMS.</output>
+            </article>
+            <!-- [FR] FIN DU BLOC À COPIER-COLLER : Objectif pédagogique -->
+            <!-- [EN] END OF COPY-PASTE BLOCK: Learning objective -->
+            <!-- ================================================================ -->
+            <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Commentaires -->
+            <!-- [EN] START OF COPY-PASTE BLOCK: Comments -->
+            <!-- ================================================================ -->
+            <article class="card"><span class="step-tag">Commentaires</span><h3>Transmettre une observation</h3>
+              <p class="muted">Message du LMS : <span id="lms-comment">—</span></p>
+              <label for="learner-comment">Commentaire à transmettre</label><textarea id="learner-comment" rows="3" maxlength="4096" placeholder="Exemple ASCII : Je souhaite un autre exemple." data-session></textarea>
+              <p class="muted">Le profil historique utilise ASCII. Pour un journal avec accents, privilégiez le bloc JSON ci-dessus. Le LMS concatène les commentaires envoyés, dans une capacité totale de 4096 caractères.</p>
+              <div class="actions"><button id="save-comment" class="button" type="button" data-session>Envoyer au suivi</button></div>
+              <details><summary>Voir le code à copier</summary><pre><code id="code-comments">const saved = SCORM12.setComments("Un autre exemple serait utile.");
+if (saved) SCORM12.commit();
+console.log(SCORM12.getComments());</code></pre><button type="button" class="button secondary" data-copy="code-comments">Copier le code</button></details>
+            </article>
+            <!-- [FR] FIN DU BLOC À COPIER-COLLER : Commentaires -->
+            <!-- [EN] END OF COPY-PASTE BLOCK: Comments -->
+          </div>
+          <!-- ================================================================ -->
+          <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Préférences apprenant -->
+          <!-- [EN] START OF COPY-PASTE BLOCK: Learner preferences -->
+          <!-- ================================================================ -->
+          <article class="card"><div class="card-top"><div><span class="step-tag">Préférences</span><h3>Adapter votre capsule</h3></div><span class="copy-tag">Bloc à copier · setPreferences()</span></div>
+            <form id="preferences-form"><div class="small-grid">
+              <div><label for="pref-audio">Audio (−1 : coupé ; 0 : défaut ; 1 à 100)</label><input id="pref-audio" type="number" min="-1" max="100" value="0" required data-session></div>
+              <div><label for="pref-language">Langue souhaitée</label><select id="pref-language" data-session><option value="">Par défaut</option><option value="fr">Français</option><option value="en">Anglais</option></select></div>
+              <div><label for="pref-speed">Vitesse (−100 à 100 ; 0 : défaut)</label><input id="pref-speed" type="number" min="-100" max="100" value="0" required data-session></div>
+              <div><label for="pref-text">Texte accompagnant l’audio</label><select id="pref-text" data-session><option value="0">Par défaut</option><option value="1">Afficher</option><option value="-1">Masquer</option></select></div>
+            </div><div class="actions"><button class="button" type="submit" data-session>Enregistrer les préférences</button></div></form>
+            <p class="muted">Ces valeurs sont des souhaits enregistrés. À vous de les appliquer à vos médias et traductions ; cette démonstration ne contient pas de lecteur audio.</p>
+            <details><summary>Voir le code à copier</summary><pre><code id="code-preferences">const report = SCORM12.setPreferences({
+  audio: 50, language: "fr", speed: 0, text: 1
+});
+const committed = SCORM12.commit();
+console.log(report, committed);</code></pre><button type="button" class="button secondary" data-copy="code-preferences">Copier le code</button></details>
+          </article>
+          <!-- [FR] FIN DU BLOC À COPIER-COLLER : Préférences apprenant -->
+          <!-- [EN] END OF COPY-PASTE BLOCK: Learner preferences -->
+          <article class="card"><span class="step-tag">Inspection en direct</span><h3>Ce que le LMS transmet</h3><dl id="launch-data" class="data-list"></dl><div class="actions"><button id="refresh-data" class="button secondary" type="button" data-session>Actualiser les données</button></div>
+            <details><summary>Lire n’importe quelle feuille du modèle</summary><label for="inspect-element">Élément à lire (n = index 0 dans cet exemple)</label><select id="inspect-element" data-session></select><div class="actions"><button id="inspect-read" class="button secondary" type="button" data-session>LMSGetValue</button><button id="inspect-error" class="button secondary" type="button">Les 3 fonctions de diagnostic</button></div><pre><code id="inspect-result">Choisissez un élément puis lancez la lecture.</code></pre><p class="muted">Une réponse d’interaction ne se relit pas en 1.2 : une erreur 404 est normale pour un champ en écriture seule. Un élément optionnel absent peut produire 401.</p></details>
+          </article>
+          <article class="card"><span class="step-tag">Journal</span><h3>Le dialogue avec le LMS</h3><p class="muted">Les 60 derniers appels, sans le contenu des réponses personnelles. Les erreurs restent visibles même si un appel suivant réussit.</p><ol id="api-log" class="log" aria-label="Journal des appels SCORM"></ol><div class="actions"><button id="commit-now" class="button secondary" type="button" data-session>LMSCommit · Sauvegarder maintenant</button></div></article>
+        </section>
+        <section id="terminer" class="section" aria-labelledby="finish-title">
+          <div class="section-heading"><h2 id="finish-title">05. Fermer la boucle</h2><span class="copy-tag">Statut ≠ fermeture de session</span></div>
+          <!-- ================================================================ -->
+          <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Statut et fermeture -->
+          <!-- [EN] START OF COPY-PASTE BLOCK: Status and session finish -->
+          <!-- ================================================================ -->
+          <article class="card"><span class="step-tag">Fin de parcours</span><h3>Une capsule bien terminée, c’est une trace bien sauvegardée.</h3><p class="muted">Marquer « terminé » change le statut. Quitter envoie la durée, sauvegarde et ferme la communication. Pour reprendre une activité plus tard, choisissez « suspendre ».</p>
+            <div class="actions"><button id="complete" class="button" type="button" data-session>✓ Marquer comme terminé</button><button id="suspend" class="button secondary" type="button" data-session>Sauvegarder et suspendre</button></div>
+            <details><summary>Autres statuts et raisons de sortie</summary><div class="small-grid"><div><label for="status-choice">Statut à transmettre</label><select id="status-choice" data-session><option>incomplete</option><option>passed</option><option>failed</option><option>browsed</option><option>completed</option></select><div class="actions"><button id="set-status" class="button secondary" type="button" data-session>Appliquer le statut</button></div></div><div><label for="exit-choice">Raison de sortie</label><select id="exit-choice" data-session><option value="suspend">suspend · reprendre plus tard</option><option value="logout">logout · quitter la session d’apprentissage</option><option value="">Chaîne vide · sortie normale</option><option value="time-out">time-out · durée dépassée</option></select><div class="actions"><button id="finish" class="button dark" type="button" data-session>LMSFinish · Fermer la communication</button></div></div></div><p class="muted">logout indique une intention ; le SCO ne déconnecte pas lui-même le compte LMS. La sortie normale utilise une chaîne vide.</p></details>
+            <details><summary>Voir le code à copier</summary><pre><code id="code-finish">// [FR] Terminer le contenu sans fermer immédiatement la communication.
+// [EN] Complete the content without immediately closing communication.
+if (SCORM12.setStatus("completed")) SCORM12.commit();
+
+// [FR] À appeler au moment où l'apprenant quitte réellement la capsule.
+// [EN] Call when the learner actually leaves the lesson.
+const closed = SCORM12.finish("suspend");
+console.log(closed);</code></pre><button type="button" class="button secondary" data-copy="code-finish">Copier le code</button></details>
+          </article>
+          <!-- [FR] FIN DU BLOC À COPIER-COLLER : Statut et fermeture -->
+          <!-- [EN] END OF COPY-PASTE BLOCK: Status and session finish -->
+        </section>
+      </div>
+      <div id="session-ended" class="status-box success" hidden role="status">La communication est fermée. Vous pouvez revenir au LMS. En simulation, rechargez la page pour ouvrir une nouvelle session et vérifier la reprise.</div>
+      <div id="feedback" class="status-box toast" role="status" aria-live="polite">Prêt à explorer. Votre premier pas : passer à l’écran suivant.</div>
+      <footer class="footer">Conçu pour apprendre et adapter · SCORM 1.2 uniquement · Consultez README.md et docs/REFERENCE-CMI.md.<br>Le simulateur local ne certifie pas la conformité. La recette finale se réalise dans votre LMS, avec un compte apprenant.</footer>
+    </main>
+  </div>
+</body>
+</html>

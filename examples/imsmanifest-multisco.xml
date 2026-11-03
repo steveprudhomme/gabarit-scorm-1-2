@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [FR] Manifeste alternatif à copier à la racine sous imsmanifest.xml pour l'essai multi-SCO.
+     [EN] Alternative manifest to copy to the root as imsmanifest.xml for a multi-SCO test. -->
+<manifest identifier="GABARIT_MULTISCO_12" version="1.0"
+ xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+ xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+ <metadata><schema>ADL SCORM</schema><schemaversion>1.2</schemaversion></metadata>
+ <organizations default="ORG_DEUX_UNITES">
+  <organization identifier="ORG_DEUX_UNITES">
+   <!-- [COPIER-COLLER / MODIFIER ICI] / [COPY-PASTE / EDIT HERE] -->
+   <!-- [FR] Deux entrées du menu, deux contextes de suivi indépendants.
+        [EN] Two menu entries, two independent tracking contexts. -->
+   <title>Deux capsules SCORM 1.2</title>
+   <item identifier="ITEM_INTRO" identifierref="RES_INTRO"><title>1. Introduction</title></item>
+   <item identifier="ITEM_PRATIQUE" identifierref="RES_PRATIQUE">
+    <title>2. Mise en pratique</title>
+    <!-- [FR] Le LMS évalue le prérequis ; terminer ITEM_INTRO avant cette unité.
+         [EN] The LMS evaluates the prerequisite; complete ITEM_INTRO before this unit. -->
+    <adlcp:prerequisites type="aicc_script">ITEM_INTRO</adlcp:prerequisites>
+    <adlcp:datafromlms>unite=pratique</adlcp:datafromlms>
+   </item>
+  </organization>
+ </organizations>
+ <resources>
+  <!-- [FR] Les mêmes fichiers servent deux ressources SCO distinctes ; personnaliser selon l'URL.
+       [EN] The same files serve two distinct SCO resources; customize content using the URL. -->
+  <resource identifier="RES_INTRO" type="webcontent" adlcp:scormtype="sco" href="index.html?unit=intro">
+   <file href="index.html"/><dependency identifierref="RES_PARTAGE"/>
+  </resource>
+  <resource identifier="RES_PRATIQUE" type="webcontent" adlcp:scormtype="sco" href="index.html?unit=pratique">
+   <file href="index.html"/><dependency identifierref="RES_PARTAGE"/>
+  </resource>
+  <!-- [FR] Un asset rassemble ici les fichiers partagés ; ce n'est pas une troisième unité lancée.
+       [EN] This asset groups shared files; it is not a third launched unit. -->
+  <resource identifier="RES_PARTAGE" type="webcontent" adlcp:scormtype="asset">
+   <file href="styles.css"/><file href="scorm_api_wrapper.js"/><file href="demo.js"/>
+  </resource>
+ </resources>
+</manifest>

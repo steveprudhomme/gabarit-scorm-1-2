@@ -1,0 +1,18 @@
+[
+  {
+    "file": "adlcp_rootv1p2.xsd",
+    "original_sha256": "166397a1f52585caac857228cf2b10085a5d07c0612a3d55cb3ed108ce8b028a"
+  },
+  {
+    "file": "imscp_rootv1p1p2.xsd",
+    "original_sha256": "029cd01047bc90371fc0d3156f97bc2cf0c2d84cdf908f7c6576fc707ef76783"
+  },
+  {
+    "file": "imsmd_rootv1p2p1.xsd",
+    "original_sha256": "bbe146eb770b14435c47fc95ea261b3b57c45aeeeba139b9a1d6b16d83490b52"
+  },
+  {
+    "file": "ims_xml.xsd",
+    "original_sha256": "d5ee21b60f118e42f70837e66ef99f9b9977b7d9cf2bb321346371f2fa22a6b2"
+  }
+]

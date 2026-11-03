@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [FR] Le manifeste est le bordereau du colis : le LMS le lit avant de lancer la capsule. -->
+<!-- [EN] The manifest is the packing slip: the LMS reads it before launching the lesson. -->
+<manifest identifier="GABARIT_SCORM12_V1" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <!-- [FR] Ces deux valeurs annoncent SCORM 1.2 ; ne pas les remplacer par une version de cours. -->
+  <!-- [EN] These two values declare SCORM 1.2; do not replace them with a course version. -->
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <!-- [FR] organizations contient les plans du cours ; default désigne celui à utiliser. -->
+  <!-- [EN] organizations holds course outlines; default selects the one to use. -->
+  <organizations default="ORG_CAPSULE">
+    <organization identifier="ORG_CAPSULE">
+      <!-- [COPIER-COLLER / MODIFIER ICI] / [COPY-PASTE / EDIT HERE] -->
+      <!-- [FR] Modifier les deux titres ci-dessous pour personnaliser le cours. -->
+      <!-- [EN] Edit both titles below to customize your course. -->
+      <title>Atelier SCORM 1.2 : votre première capsule</title>
+      <!-- [FR] item est une entrée du plan ; identifierref pointe vers la resource de même identifiant. -->
+      <!-- [EN] item is an outline entry; identifierref points to the resource with that identifier. -->
+      <item identifier="ITEM_CAPSULE" identifierref="RES_CAPSULE" isvisible="true">
+        <title>Explorer, pratiquer et reprendre</title>
+        <!-- [FR] Extensions 1.2 optionnelles : durée, action et données de lancement ; la capsule gère le délai. -->
+        <!-- [EN] Optional 1.2 extensions: duration, action and launch data; the lesson handles the time limit. -->
+        <adlcp:maxtimeallowed>0000:30:00.00</adlcp:maxtimeallowed>
+        <adlcp:timelimitaction>continue,message</adlcp:timelimitaction>
+        <adlcp:datafromlms>theme=scorm12&amp;version=1</adlcp:datafromlms>
+        <!-- [FR] Pour un seuil imposé au LMS, ajouter ici : <adlcp:masteryscore>80</adlcp:masteryscore>. -->
+        <!-- [EN] To give the LMS a passing threshold, add here: <adlcp:masteryscore>80</adlcp:masteryscore>. -->
+        <!-- [FR] Ce seuil peut modifier le statut au départ ; il est donc désactivé dans cet atelier libre. -->
+        <!-- [EN] This threshold can change status on exit; it is therefore disabled in this open workshop. -->
+      </item>
+    </organization>
+  </organizations>
+  <!-- [FR] resources inventorie les unités lançables et leurs fichiers ; ce n'est pas le menu. -->
+  <!-- [EN] resources inventories launchable units and their files; it is not the menu. -->
+  <resources>
+    <!-- [FR] sco signifie capsule suivie ; asset désignerait une ressource sans dialogue SCORM. -->
+    <!-- [EN] sco means a tracked lesson; asset would mean a resource without SCORM communication. -->
+    <resource identifier="RES_CAPSULE" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <!-- [COPIER-COLLER / MODIFIER ICI] / [COPY-PASTE / EDIT HERE] -->
+      <!-- [FR] Ajouter une ligne file pour chaque image, média ou script réellement utilisé. -->
+      <!-- [EN] Add one file entry for every image, medium or script actually used. -->
+      <file href="index.html"/>
+      <file href="styles.css"/>
+      <file href="scorm_api_wrapper.js"/>
+      <file href="demo.js"/>
+    </resource>
+    <!-- [FR] Documentation et exemples : fichiers de support, sans unité de cours supplémentaire.
+         [EN] Documentation and examples: support files, without an additional course unit. -->
+    <resource identifier="RES_SUPPORT" type="webcontent" adlcp:scormtype="asset">
+      <file href="README.md"/>
+      <file href="ARCHITECTURE.md"/>
+      <file href="docs/REFERENCE-CMI.md"/>
+      <file href="docs/SOURCES.md"/>
+      <file href="docs/PAQUETAGE-AVANCE.md"/>
+      <file href="docs/VALIDATION.md"/>
+      <file href="examples/minimal.html"/>
+      <file href="examples/imsmanifest-multisco.xml"/>
+      <file href="imscp_rootv1p1p2.xsd"/>
+      <file href="adlcp_rootv1p2.xsd"/>
+      <file href="imsmd_rootv1p2p1.xsd"/>
+      <file href="ims_xml.xsd"/>
+    </resource>
+  </resources>
+</manifest>

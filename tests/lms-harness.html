@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Banc d'essai LMS factice SCORM 1.2</title></head>
+<body>
+  <h1>Banc d'essai : API dans la fenêtre parente</h1>
+  <p>Ce banc d'essai utilise une API factice. Il vérifie la découverte et les erreurs ; il ne remplace pas un LMS réel.</p>
+  <p id="scenario"></p><p id="calls" role="status"></p>
+  <script src="../scorm_api_wrapper.js"></script>
+  <script>
+    // [FR] Exposer API dans le parent permet au vrai index.html de tester sa recherche d'adaptateur.
+    // [EN] Exposing API in the parent lets the actual index.html test adapter discovery.
+    const scenario = new URLSearchParams(location.search).get("scenario") || "normal";
+    document.getElementById("scenario").textContent = "Scénario : " + scenario;
+    const mock = SCORM12.createMockAPI({
+      storageKey: "scorm12-harness-" + scenario,
+      unsupported: scenario === "optional" ? ["cmi.interactions", "cmi.core.score.min", "cmi.core.lesson_mode", "cmi.comments"] : []
+    });
+    let forcedError = "0";
+    let callCount = 0;
+    window.API = {};
+    ["LMSInitialize", "LMSFinish", "LMSGetValue", "LMSSetValue", "LMSCommit"].forEach(name => {
+      window.API[name] = function (...args) {
+        callCount += 1;
+        document.getElementById("calls").textContent = "Appels reçus par API : " + callCount + " ; dernier : " + name;
+        if ((scenario === "init-fail" && name === "LMSInitialize") || (scenario === "commit-fail" && name === "LMSCommit")) {
+          forcedError = "101";
+          return "false";
+        }
+        forcedError = "0";
+        return mock[name](...args);
+      };
+    });
+    window.API.LMSGetLastError = () => forcedError !== "0" ? forcedError : mock.LMSGetLastError();
+    window.API.LMSGetErrorString = code => mock.LMSGetErrorString(code);
+    window.API.LMSGetDiagnostic = code => forcedError !== "0" ? "Échec injecté pour le test / Injected test failure" : mock.LMSGetDiagnostic(code);
+  </script>
+  <!-- [FR] Les styles sont locaux au banc d'essai, qui n'est pas livré dans le colis LMS.
+       [EN] Styles are local to this test harness, which is excluded from the LMS package. -->
+  <iframe title="Capsule lancée depuis le LMS factice" src="../index.html" style="width:100%;height:85vh;border:1px solid #aaa"></iframe>
+</body>
+</html>

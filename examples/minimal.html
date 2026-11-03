@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma petite capsule SCORM 1.2</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main>
+    <!-- ================================================================ -->
+    <!-- [FR] DÉBUT DU BLOC À COPIER-COLLER : Petite capsule autonome -->
+    <!-- [EN] START OF COPY-PASTE BLOCK: Small standalone lesson -->
+    <!-- ================================================================ -->
+    <h1>Mon premier objectif</h1>
+    <p>Remplacez ce texte par votre contenu pédagogique.</p>
+    <label for="note">Mon idée à retenir</label>
+    <textarea id="note" rows="4"></textarea>
+    <div class="actions"><button id="save" class="button" type="button">Sauvegarder</button><button id="done" class="button" type="button">Terminer et quitter</button></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <!-- [FR] FIN DU BLOC À COPIER-COLLER : Petite capsule autonome -->
+    <!-- [EN] END OF COPY-PASTE BLOCK: Small standalone lesson -->
+  </main>
+  <!-- [FR] Si ce fichier devient index.html à la racine, enlever ../ des chemins CSS et JS.
+       [EN] If this file becomes index.html at the root, remove ../ from the CSS and JS paths. -->
+  <script src="../scorm_api_wrapper.js"></script>
+  <script>
+    // [FR] Une seule initialisation ; cet exemple ne charge pas demo.js.
+    // [EN] Initialize once; this example does not load demo.js.
+    const note = document.getElementById("note");
+    const message = document.getElementById("message");
+    const saveButton = document.getElementById("save");
+    const doneButton = document.getElementById("done");
+    function saveNote() {
+      const saved = SCORM12.saveState({ version: 1, note: note.value });
+      if (!saved) return false;
+      const bookmark = SCORM12.setBookmark("mon-objectif");
+      const exit = SCORM12.setExit("suspend");
+      const committed = SCORM12.commit();
+      return bookmark && exit && committed;
+    }
+    if (SCORM12.initialize()) {
+      // [FR] La reprise n'est demandée que si le LMS indique resume.
+      // [EN] Restore progress only when the LMS reports resume.
+      if (SCORM12.get("cmi.core.entry") === "resume") {
+        const restored = SCORM12.loadState({ version: 1, note: "" });
+        if (restored.version === 1 && typeof restored.note === "string") note.value = restored.note;
+      }
+      if (SCORM12.getStatus() === "not attempted" && SCORM12.mode === "normal") SCORM12.setStatus("incomplete");
+      message.textContent = SCORM12.isSimulation ? "Simulation locale : vos essais restent ici." : "Connecté au LMS.";
+      saveButton.addEventListener("click", () => {
+        const ok = saveNote();
+        message.textContent = ok ? "Sauvegarde acceptée." : "Sauvegarde refusée : " + SCORM12.lastError.message;
+      });
+      doneButton.addEventListener("click", () => {
+        // [FR] Sauvegarder d'abord la note ; ne pas annoncer la réussite si une étape échoue.
+        // [EN] Save the note first; never announce success if a step fails.
+        if (!saveNote() || !SCORM12.setStatus("completed") || !SCORM12.finish("")) {
+          message.textContent = "Fermeture non confirmée. Gardez la page ouverte et réessayez.";
+          return;
+        }
+        saveButton.disabled = true;
+        doneButton.disabled = true;
+        note.disabled = true;
+        message.textContent = "Terminé et sauvegardé. Vous pouvez revenir au LMS.";
+      });
+      window.addEventListener("pagehide", event => {
+        if (SCORM12.state !== "active") return;
+        saveNote();
+        if (!event.persisted) SCORM12.finish("suspend", true);
+      });
+    } else {
+      saveButton.disabled = true;
+      doneButton.disabled = true;
+      note.disabled = true;
+      message.textContent = "Impossible d'ouvrir la session : " + SCORM12.lastError.message;
+    }
+  </script>
+</body>
+</html>

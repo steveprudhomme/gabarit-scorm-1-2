@@ -1,0 +1,10 @@
+# [FR] Conserver des fins de ligne cohérentes pour le code et la documentation.
+# [EN] Keep consistent line endings for source code and documentation.
+* text=auto eol=lf
+
+# [FR] Préserver les octets des originaux dont les empreintes sont documentées.
+# [EN] Preserve the bytes of original files whose hashes are documented.
+references/original-schemas/* -text
+*.pdf binary
+*.png binary
+*.zip binary
