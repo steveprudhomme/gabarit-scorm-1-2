@@ -47,7 +47,7 @@ Ces éléments existent en 1.2. Le manifeste principal montre un temps maximal, 
 
 ## Exemple multi-SCO et ressource partagée
 
-Le fichier [examples/imsmanifest-multisco.xml](../examples/imsmanifest-multisco.xml) est un **manifeste alternatif**, pas celui importé par défaut. Pour l'essayer, conservez une copie du manifeste principal, puis remplacez son contenu par celui de l'exemple et reconstruisez le ZIP. Ne placez pas deux manifestes principaux à la racine sous le même nom.
+Le fichier [examples/imsmanifest-multisco.xml](../examples/imsmanifest-multisco.xml) est un **manifeste alternatif**, pas celui importé par défaut. Pour l'essayer, conservez une copie de `src/imsmanifest.xml`, puis remplacez son contenu par celui de l'exemple et reconstruisez le ZIP dans `dist/`. Ne placez pas deux manifestes principaux à la racine sous le même nom.
 
 L'exemple lance la même application avec `?unit=intro` et `?unit=pratique`, comme deux SCO distincts. Le LMS doit leur attribuer deux contextes de suivi indépendants. Les paramètres d'URL n'ajoutent pas un élément cmi ; dans votre application, vous pouvez lire `new URLSearchParams(location.search).get("unit")` pour afficher des contenus différents. Ici les deux SCO montrent les mêmes activités afin d'illustrer le découpage. Le deuxième possède le prérequis du premier. `RES_PARTAGE` contient les fichiers partagés via `dependency`.
 
@@ -60,8 +60,8 @@ Les métadonnées servent à retrouver et décrire un contenu, comme une fiche d
 Pour référencer un document de métadonnées externe, la structure ADL est :
 
 ```xml
-<!-- [FR] Exemple : le document metadata.xml doit être créé, validé et inclus dans le colis.
-     [EN] Example: metadata.xml must be created, validated and included in the package. -->
+<!-- [FR] Exemple : le document metadata.xml doit être créé dans src/, validé et inclus dans le colis.
+     [EN] Example: metadata.xml must be created inside src/, validated and included in the package. -->
 <metadata>
   <schema>ADL SCORM</schema>
   <schemaversion>1.2</schemaversion>

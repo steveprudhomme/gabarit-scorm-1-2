@@ -50,17 +50,9 @@
       <file href="scorm_api_wrapper.js"/>
       <file href="demo.js"/>
     </resource>
-    <!-- [FR] Documentation et exemples : fichiers de support, sans unité de cours supplémentaire.
-         [EN] Documentation and examples: support files, without an additional course unit. -->
+    <!-- [FR] Schémas de validation : support technique du paquetage, sans unité de cours supplémentaire.
+         [EN] Validation schemas: package support files, without an additional course unit. -->
     <resource identifier="RES_SUPPORT" type="webcontent" adlcp:scormtype="asset">
-      <file href="README.md"/>
-      <file href="ARCHITECTURE.md"/>
-      <file href="docs/REFERENCE-CMI.md"/>
-      <file href="docs/SOURCES.md"/>
-      <file href="docs/PAQUETAGE-AVANCE.md"/>
-      <file href="docs/VALIDATION.md"/>
-      <file href="examples/minimal.html"/>
-      <file href="examples/imsmanifest-multisco.xml"/>
       <file href="imscp_rootv1p1p2.xsd"/>
       <file href="adlcp_rootv1p2.xsd"/>
       <file href="imsmd_rootv1p2p1.xsd"/>

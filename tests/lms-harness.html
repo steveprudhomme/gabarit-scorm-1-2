@@ -5,7 +5,7 @@
   <h1>Banc d'essai : API dans la fenêtre parente</h1>
   <p>Ce banc d'essai utilise une API factice. Il vérifie la découverte et les erreurs ; il ne remplace pas un LMS réel.</p>
   <p id="scenario"></p><p id="calls" role="status"></p>
-  <script src="../scorm_api_wrapper.js"></script>
+  <script src="../src/scorm_api_wrapper.js"></script>
   <script>
     // [FR] Exposer API dans le parent permet au vrai index.html de tester sa recherche d'adaptateur.
     // [EN] Exposing API in the parent lets the actual index.html test adapter discovery.
@@ -36,6 +36,6 @@
   </script>
   <!-- [FR] Les styles sont locaux au banc d'essai, qui n'est pas livré dans le colis LMS.
        [EN] Styles are local to this test harness, which is excluded from the LMS package. -->
-  <iframe title="Capsule lancée depuis le LMS factice" src="../index.html" style="width:100%;height:85vh;border:1px solid #aaa"></iframe>
+  <iframe title="Capsule lancée depuis le LMS factice" src="../src/index.html" style="width:100%;height:85vh;border:1px solid #aaa"></iframe>
 </body>
 </html>

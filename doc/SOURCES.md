@@ -36,7 +36,7 @@ Les exemples suivent les définitions et vocabulaires du modèle, plutôt que ce
 | `ims_xml.xsd` | [IMS Global, attributs XML](https://www.imsglobal.org/xsd/ims_xml.xsd) |
 | `adlcp_rootv1p2.xsd` | [Copie publique du schéma ADL 1.2](https://raw.githubusercontent.com/RicardoAllende/Plantilla_SCORM/master/adlcp_rootv1p2.xsd) ; espace de noms et extensions recoupés avec le livre CAM ADL |
 
-Les commentaires XML des schémas livrés à la racine ont été accompagnés d'une version française ; les attributions anglaises ont été conservées. Un seul ajustement de syntaxe a été effectué dans `ims_xml.xsd` : le schéma historique liait le namespace XML réservé au préfixe vide ; il le lie maintenant à `xml`, ce qui permet sa lecture par un processeur XML actuel. Les attributs déclarés et les règles SCORM ne sont pas modifiés.
+Les commentaires XML des schémas livrés dans `src/` (à la racine du ZIP) ont été accompagnés d'une version française ; les attributions anglaises ont été conservées. Un seul ajustement de syntaxe a été effectué dans `ims_xml.xsd` : le schéma historique liait le namespace XML réservé au préfixe vide ; il le lie maintenant à `xml`, ce qui permet sa lecture par un processeur XML actuel. Les attributs déclarés et les règles SCORM ne sont pas modifiés.
 
 Les téléchargements originaux, non traduits, sont conservés dans `references/original-schemas/` et leurs empreintes SHA-256 initiales dans `references/schema-hashes.json`. Ces copies de provenance sont hors du ZIP LMS. Les annotations documentaires d'origine des schémas sont conservées en anglais ; elles ne sont pas des commentaires pédagogiques ajoutés au code.
 

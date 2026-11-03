@@ -4,6 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import re
 import subprocess
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,7 +47,7 @@ class Inspect(HTMLParser):
 
 def check():
     checked = []
-    for relative in ["index.html", "examples/minimal.html", "tests/lms-harness.html"]:
+    for relative in ["src/index.html", "examples/minimal.html", "tests/lms-harness.html"]:
         path = ROOT / relative
         parser = Inspect()
         parser.feed(path.read_text(encoding="utf-8"))
@@ -63,13 +64,21 @@ def check():
             assert result.returncode == 0, f"{relative} {name}: {result.stderr}"
         checked.append(relative)
     main = Inspect()
-    main.feed((ROOT / "index.html").read_text(encoding="utf-8"))
-    for identifier in re.findall(r'\$\("([a-zA-Z0-9-]+)"\)', (ROOT / "demo.js").read_text(encoding="utf-8")):
+    main.feed((ROOT / "src/index.html").read_text(encoding="utf-8"))
+    for identifier in re.findall(r'\$\("([a-zA-Z0-9-]+)"\)', (ROOT / "src/demo.js").read_text(encoding="utf-8")):
         assert identifier in main.ids, f"Sélecteur inconnu / Unknown selector: {identifier}"
-    files = [ROOT / "imsmanifest.xml", *ROOT.glob("*.xsd"), ROOT / "index.html", ROOT / "examples/minimal.html", ROOT / "examples/imsmanifest-multisco.xml", ROOT / "tests/lms-harness.html"]
+    files = [ROOT / "src/imsmanifest.xml", *(ROOT / "src").glob("*.xsd"), ROOT / "src/index.html", ROOT / "examples/minimal.html", ROOT / "examples/imsmanifest-multisco.xml", ROOT / "tests/lms-harness.html"]
     for path in files:
         for comment in re.findall(r"<!--(.*?)-->", path.read_text(encoding="utf-8"), re.S):
             assert any(marker in comment for marker in ["[FR]", "[EN]", "[COPIER-COLLER"]) or set(comment.strip()) <= {"=", "*"}, f"Commentaire sans langue / Comment without language marker: {path}"
+    # [FR] Après un déplacement de dossiers, vérifier aussi les liens relatifs des guides.
+    # [EN] After moving directories, also check relative links in the guides.
+    for path in [ROOT / "README.md", *(ROOT / "doc").glob("*.md")]:
+        for reference in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text(encoding="utf-8")):
+            url = urlsplit(reference)
+            if not url.scheme and not url.netloc and url.path:
+                target = (path.parent / unquote(url.path)).resolve()
+                assert target.is_relative_to(ROOT) and target.exists(), f"Lien absent / Missing link: {path.name}: {reference}"
     print("Contenu vérifié / Content checked: " + ", ".join(checked))
     print("Identifiants, fichiers, exemples et commentaires OK / IDs, files, examples and comments OK.")
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- [FR] Manifeste alternatif à copier à la racine sous imsmanifest.xml pour l'essai multi-SCO.
-     [EN] Alternative manifest to copy to the root as imsmanifest.xml for a multi-SCO test. -->
+<!-- [FR] Manifeste alternatif à copier sous src/imsmanifest.xml pour l'essai multi-SCO.
+     [EN] Alternative manifest to copy as src/imsmanifest.xml for a multi-SCO test. -->
 <manifest identifier="GABARIT_MULTISCO_12" version="1.0"
  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"

@@ -1,8 +1,20 @@
 # Vérifications et recette
 
-État au **1er novembre 2026**. Ces vérifications établissent le comportement décrit du gabarit ; elles ne sont pas une certification ADL.
+Mise à jour au **2 novembre 2026**. Ces vérifications établissent le comportement décrit du gabarit ; elles ne sont pas une certification ADL.
 
-## Vérifications réalisées
+## Réorganisation du dépôt : contrôles du 2 novembre 2026
+
+La capsule se trouve dans `src/`, les guides dans `doc/` et le paquetage généré dans `dist/`. Les exemples, tests, outils et références restent en dehors du ZIP LMS.
+
+- Les 14 scénarios du moteur ont été relancés avec le nouveau chemin source : tous réussissent.
+- Les 4 tests de génération du ZIP réussissent : séparation capsule/dépôt, conservation des chemins de médias imbriqués, préservation du ZIP précédent si un fichier manque et refus des références hors de `src/`.
+- Les deux manifestes passent à nouveau la validation XML avec les schémas de `src/`.
+- Les identifiants HTML, scripts, blocs copiables, références CSS/JS et liens relatifs des guides sont vérifiés avec les nouveaux chemins.
+- `dist/gabarit-scorm12.zip` est reconstruit avec 9 fichiers : le manifeste, le HTML, le CSS, les deux scripts et les quatre XSD. `imsmanifest.xml` est directement à sa racine. Aucun dossier `src/`, guide, exemple de travail, test ou outil n'y est ajouté.
+
+Les essais d'interface ci-dessous datent du 1er novembre 2026. Ils n'ont pas été répétés pour cette réorganisation ; le moteur et les activités ne sont pas modifiés. Le banc d'essai de fenêtre parente référence désormais `../src/index.html` et les chemins locaux ont été contrôlés.
+
+## Vérifications initiales du 1er novembre 2026
 
 | Vérification | Résultat |
 |---|---|
@@ -34,9 +46,10 @@ Les tests automatisés couvrent la découverte parent/opener avec cycles et acc�
 Depuis le dossier du projet :
 
 ```powershell
-node --check scorm_api_wrapper.js
-node --check demo.js
+node --check src/scorm_api_wrapper.js
+node --check src/demo.js
 node tests/scorm.test.cjs
+python tests/package_test.py
 python tools/check-content.py
 powershell -NoProfile -File tools/validate.ps1
 python tools/package.py

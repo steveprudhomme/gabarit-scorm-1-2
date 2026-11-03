@@ -1,5 +1,5 @@
-// [FR] Gabarit SCORM 1.2 : interprète entre votre capsule et le LMS. Voir docs/SOURCES.md.
-// [EN] SCORM 1.2 template: interpreter between your lesson and the LMS. See docs/SOURCES.md.
+// [FR] Gabarit SCORM 1.2 : interprète entre votre capsule et le LMS. Voir ../doc/SOURCES.md dans le dépôt.
+// [EN] SCORM 1.2 template: interpreter between your lesson and the LMS. See ../doc/SOURCES.md in the repository.
 (function (root) {
     "use strict";
 
