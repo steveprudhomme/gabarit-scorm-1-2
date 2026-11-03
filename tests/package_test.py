@@ -1,3 +1,7 @@
+# [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only
+# [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only
+# [FR] Redistribution et modification sous GPL v3, sans garantie ; voir LICENSE.md.
+# [EN] Redistribution and modification under GPL v3, without warranty; see LICENSE.md.
 # [FR] Tests du colis généré : exécuter python tests/package_test.py depuis la racine du dépôt.
 # [EN] Generated package tests: run python tests/package_test.py from the repository root.
 from contextlib import redirect_stdout
@@ -28,6 +32,8 @@ class PackageTests(unittest.TestCase):
         for name in ["imscp_rootv1p1p2.xsd", "adlcp_rootv1p2.xsd", "imsmd_rootv1p2p1.xsd", "ims_xml.xsd"]:
             (self.source / name).write_text("schema fixture", encoding="utf-8")
         (self.source / "index.html").write_text("<h1>Capsule</h1>", encoding="utf-8")
+        (self.root / "LICENSE.md").write_text("license fixture", encoding="utf-8")
+        (self.root / "THIRD_PARTY_NOTICES.md").write_text("third-party fixture", encoding="utf-8")
 
     def restore_paths(self):
         packager.ROOT, packager.SOURCE, packager.OUTPUT = self.original_paths
@@ -55,7 +61,9 @@ class PackageTests(unittest.TestCase):
         with ZipFile(packager.OUTPUT) as archive:
             self.assertIn("imsmanifest.xml", archive.namelist())
             self.assertIn("index.html", archive.namelist())
-            self.assertEqual(len(archive.namelist()), 6)
+            self.assertEqual(len(archive.namelist()), 8)
+            self.assertEqual(archive.read("LICENSE.md"), b"license fixture")
+            self.assertEqual(archive.read("THIRD_PARTY_NOTICES.md"), b"third-party fixture")
             self.assertIsNone(archive.testzip())
             self.assertFalse(any(name.startswith(("src/", "doc/", "tests/", "tools/", "references/", "examples/")) for name in archive.namelist()))
 
@@ -75,6 +83,13 @@ class PackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.build()
         self.assertEqual(packager.OUTPUT.read_bytes(), b"previous package")
+
+    def test_missing_legal_notice_blocks_distribution(self):
+        self.manifest()
+        (self.root / "LICENSE.md").unlink()
+        with self.assertRaises(ValueError):
+            self.build()
+        self.assertFalse(packager.OUTPUT.exists())
 
     def test_references_cannot_escape_the_capsule_source(self):
         (self.root / "private.txt").write_text("not part of the capsule", encoding="utf-8")

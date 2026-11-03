@@ -10,3 +10,17 @@ Thumbs.db
 # [FR] Ce rapport contient des chemins propres au poste ; conserver la documentation de validation.
 # [EN] This report contains machine-specific paths; retain the validation documentation.
 tests/verification.json
+
+# [FR] Résultats générés : disponibles localement ou comme artefacts de CI, hors des nouveaux commits.
+# [EN] Generated outputs: available locally or as CI artifacts, excluded from new commits.
+/dist/
+/artifacts/
+/coverage/
+/tests/output/
+/tests/apercu-capsule.png
+/references/rte.txt
+/references/SCORM-12-CAM.txt
+node_modules/
+.pytest_cache/
+.ruff_cache/
+.eslintcache

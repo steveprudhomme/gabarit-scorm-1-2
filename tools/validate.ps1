@@ -1,3 +1,7 @@
+# [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only
+# [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only
+# [FR] Redistribution et modification sous GPL v3, sans garantie ; voir LICENSE.md.
+# [EN] Redistribution and modification under GPL v3, without warranty; see LICENSE.md.
 # [FR] Vérification XML hors ligne avec les schémas historiques livrés dans le projet.
 # [EN] Offline XML validation using the historical schemas bundled with this project.
 $ErrorActionPreference = 'Stop'

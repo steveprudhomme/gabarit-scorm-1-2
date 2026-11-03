@@ -1,3 +1,7 @@
+// [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only
+// [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only
+// [FR] Redistribution et modification sous GPL v3, sans garantie ; voir LICENSE.md.
+// [EN] Redistribution and modification under GPL v3, without warranty; see LICENSE.md.
 // [FR] Gabarit SCORM 1.2 : interprète entre votre capsule et le LMS. Voir ../doc/SOURCES.md dans le dépôt.
 // [EN] SCORM 1.2 template: interpreter between your lesson and the LMS. See ../doc/SOURCES.md in the repository.
 (function (root) {

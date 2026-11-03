@@ -1,3 +1,7 @@
+# [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only
+# [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only
+# [FR] Redistribution et modification sous GPL v3, sans garantie ; voir LICENSE.md.
+# [EN] Redistribution and modification under GPL v3, without warranty; see LICENSE.md.
 # [FR] Vérifier les liens locaux, identifiants HTML, exemples JavaScript et repères de commentaires.
 # [EN] Check local links, HTML identifiers, JavaScript examples and comment markers.
 from pathlib import Path
@@ -73,7 +77,9 @@ def check():
             assert any(marker in comment for marker in ["[FR]", "[EN]", "[COPIER-COLLER"]) or set(comment.strip()) <= {"=", "*"}, f"Commentaire sans langue / Comment without language marker: {path}"
     # [FR] Après un déplacement de dossiers, vérifier aussi les liens relatifs des guides.
     # [EN] After moving directories, also check relative links in the guides.
-    for path in [ROOT / "README.md", *(ROOT / "doc").glob("*.md")]:
+    for path in [*ROOT.glob("*.md"), *(ROOT / "doc").glob("*.md"), ROOT / "references/README.md"]:
+        if path.name == "LICENSE.md":
+            continue
         for reference in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text(encoding="utf-8")):
             url = urlsplit(reference)
             if not url.scheme and not url.netloc and url.path:

@@ -29,6 +29,10 @@ La compatibilité vise les LMS qui implémentent SCORM 1.2 et rendent leur API a
 ```text
 gabarit-scorm-1-2/
 ├── README.md                   ← Présentation du dépôt et démarrage rapide
+├── LICENSE.md, THIRD_PARTY_NOTICES.md ← Licence du travail original et droits tiers
+├── CONTRIBUTING.md, CODE_OF_CONDUCT.md, MAINTAINERS.md ← Participer au projet
+├── INSTALL.md, CHANGELOG.md     ← Installation détaillée et historique
+├── .github/                    ← Modèles de tickets, propositions et CI
 ├── src/                        ← Capsule seule : fichiers destinés au LMS
 │   ├── imsmanifest.xml         ← Livrable 1 : bordereau, titres et inventaire
 │   ├── scorm_api_wrapper.js    ← Livrable 2 : moteur autonome et simulateur
@@ -56,7 +60,7 @@ gabarit-scorm-1-2/
 │   └── validate.ps1            ← Valide le XML avec les schémas locaux
 ├── references/                 ← Copies des documents ADL, hors ZIP LMS
 └── dist/
-    └── gabarit-scorm12.zip      ← Archive prête à importer dans un LMS
+    └── gabarit-scorm12.zip      ← Archive générée localement, ignorée par Git
 ```
 
 Les schémas XSD sont des « règles de grammaire » pour vérifier le XML. Ils ne sont pas exécutés par la capsule. Les noms et espaces de noms historiques, même en `http://`, sont des identifiants XML : ne les modernisez pas en les remplaçant par `https://`.
@@ -200,15 +204,15 @@ Les méthodes natives ne calculent pas automatiquement le temps ni le JSON. Pour
 
 Une archive SCORM doit contenir **`imsmanifest.xml` directement à sa racine**. C'est l'erreur classique du premier colis : on compresse le dossier parent et le LMS ne trouve pas son bordereau.
 
-L'archive fournie dans `dist/` est déjà prête. Après vos modifications, lancez depuis la racine du dépôt, avec Python installé :
+Si vous avez déjà une archive locale dans `dist/`, conservez-la, mais régénérez-la après une modification. Les clones Git ne contiennent plus ce résultat généré ; vous pouvez aussi le télécharger comme artefact d'une [exécution réussie de la CI](https://github.com/steveprudhomme/gabarit-scorm-1-2/actions). Pour produire votre ZIP, lancez depuis la racine du dépôt, avec Python installé :
 
 ```powershell
 python tools/package.py
 ```
 
-L'outil relit les ressources de `src/imsmanifest.xml`, refuse les références manquantes ou sortant de `src/`, inclut les schémas XSD, puis crée `dist/gabarit-scorm12.zip`. Il n'ajoute aucun guide, exemple de travail, test, outil ou document de référence. Les noms dans le ZIP sont relatifs à `src/`, sans ce préfixe : `imsmanifest.xml` est directement à la racine de l'archive. Ajoutez vos nouveaux médias dans `src/` et déclarez-les dans le manifeste avant de relancer l'outil. Le ZIP précédent est remplacé uniquement à la fin d'une génération réussie. Le ZIP ne s'inclut jamais lui-même.
+L'outil relit les ressources de `src/imsmanifest.xml`, refuse les références manquantes ou sortant de `src/`, inclut les schémas XSD, puis crée `dist/gabarit-scorm12.zip`. Les notices `LICENSE.md` et `THIRD_PARTY_NOTICES.md` de la racine accompagnent le code dans ce ZIP. Il n'ajoute aucun guide, exemple de travail, test, outil ou document de référence. Les noms dans le ZIP sont relatifs à `src/`, sans ce préfixe : `imsmanifest.xml` est directement à la racine de l'archive. Ajoutez vos nouveaux médias dans `src/` et déclarez-les dans le manifeste avant de relancer l'outil. Le ZIP précédent est remplacé uniquement à la fin d'une génération réussie. Le ZIP ne s'inclut jamais lui-même.
 
-Sans Python, ouvrez le dossier **`src/`** et sélectionnez ses fichiers : `imsmanifest.xml`, `index.html`, les deux scripts, `styles.css`, les quatre XSD et vos médias. Utilisez « Compresser en fichier ZIP », puis placez le ZIP dans `dist/`. Ne compressez pas le dossier `src/` lui-même. Ouvrez l'archive pour vérifier que `imsmanifest.xml` est immédiatement visible, sans devoir ouvrir un sous-dossier.
+Sans Python, préparez un dossier de travail avec le contenu de **`src/`** (`imsmanifest.xml`, `index.html`, les deux scripts, `styles.css`, les quatre XSD et vos médias), puis ajoutez-y les fichiers `LICENSE.md` et `THIRD_PARTY_NOTICES.md` de la racine du dépôt. Sélectionnez les fichiers de ce dossier et utilisez « Compresser en fichier ZIP », puis placez le ZIP dans `dist/`. Ne compressez pas le dossier `src/` lui-même. Ouvrez l'archive pour vérifier que `imsmanifest.xml` est immédiatement visible, sans devoir ouvrir un sous-dossier.
 
 ## 10. Tester sur Moodle
 
@@ -258,9 +262,11 @@ node --check src/scorm_api_wrapper.js
 node --check src/demo.js
 node tests/scorm.test.cjs
 python tests/package_test.py
-python tools/check-content.py
+python tests/dco_test.py
+python tools/check-style.py
 powershell -NoProfile -File tools/validate.ps1
 python tools/package.py
+python tools/check-content.py
 ```
 
 Les tests Node utilisent seulement sa bibliothèque standard. La validation XML utilise les schémas locaux et .NET sous Windows. L'état des vérifications et la liste de recette manuelle sont dans [VALIDATION.md](VALIDATION.md). Aucun test automatisé local ne remplace un lancement réel avec votre LMS.

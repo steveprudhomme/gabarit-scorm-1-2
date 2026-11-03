@@ -1,0 +1,10 @@
+# [FR] Autoriser aussi les questions simples qui ne correspondent pas à un modèle.
+# [EN] Also allow simple questions that do not fit a template.
+blank_issues_enabled: true
+contact_links:
+  - name: Guide complet / Complete guide
+    url: https://github.com/steveprudhomme/gabarit-scorm-1-2/blob/main/doc/GUIDE.md
+    about: Consulter les exemples et les erreurs classiques avant de déposer un ticket.
+  - name: Code de conduite / Code of conduct
+    url: https://github.com/steveprudhomme/gabarit-scorm-1-2/blob/main/CODE_OF_CONDUCT.md
+    about: Lire les règles de participation et les modalités de signalement.

@@ -1,3 +1,7 @@
+// [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only
+// [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only
+// [FR] Redistribution et modification sous GPL v3, sans garantie ; voir LICENSE.md.
+// [EN] Redistribution and modification under GPL v3, without warranty; see LICENSE.md.
 // [FR] Tests sans dépendance : lancer node tests/scorm.test.cjs à la racine.
 // [EN] Dependency-free tests: run node tests/scorm.test.cjs from the project root.
 const test = require("node:test");

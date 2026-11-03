@@ -40,6 +40,8 @@ Les commentaires XML des schémas livrés dans `src/` (à la racine du ZIP) ont 
 
 Les téléchargements originaux, non traduits, sont conservés dans `references/original-schemas/` et leurs empreintes SHA-256 initiales dans `references/schema-hashes.json`. Ces copies de provenance sont hors du ZIP LMS. Les annotations documentaires d'origine des schémas sont conservées en anglais ; elles ne sont pas des commentaires pédagogiques ajoutés au code.
 
+La GPL v3 appliquée au travail original du projet ne remplace pas ces droits tiers. Les livres ADL et les schémas historiques restent conservés et attribués ; voir [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). Seules les extractions de texte automatiques, lorsqu'elles existent localement, cessent d'être suivies dans les nouveaux commits. Les PDF originaux et les explications de ce guide demeurent disponibles.
+
 Le validateur fourni charge les schémas CP, ADL et les attributs XML. Le manifeste principal n'emploie pas de métadonnées LOM embarquées ; il ne charge donc pas le schéma IMS MD, dont certains anciens modèles ont une ambiguïté de grammaire pour les validateurs modernes. Ajouter des métadonnées détaillées demande une vérification dédiée.
 
 ## Sources pratiques, distinctes de la norme

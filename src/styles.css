@@ -1,3 +1,5 @@
+/* [FR] Copyright (C) 2026 Steve Prud'Homme et les contributeurs. SPDX-License-Identifier: GPL-3.0-only */
+/* [EN] Copyright (C) 2026 Steve Prud'Homme and contributors. SPDX-License-Identifier: GPL-3.0-only */
 /* [FR] Personnalisez les couleurs ici : aucun style ne modifie les données SCORM. */
 /* [EN] Customize colors here: styling never changes SCORM data. */
 :root{--ink:#182c35;--muted:#53686e;--paper:#f3f5f1;--white:#fff;--line:#dbe3de;--green:#17654e;--lime:#d9f499;--soft:#e9f0eb;--orange:#9b461e;--red:#a22f33;--radius:18px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}

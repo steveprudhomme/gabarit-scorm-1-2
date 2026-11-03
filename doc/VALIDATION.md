@@ -2,6 +2,20 @@
 
 Mise à jour au **2 novembre 2026**. Ces vérifications établissent le comportement décrit du gabarit ; elles ne sont pas une certification ADL.
 
+## Accueil open source et automatisation : contrôles du 2 novembre 2026
+
+Les guides pédagogiques existants, leurs exemples et les sources normatives sont conservés. Le README et les nouveaux documents de la racine les complètent. La GPL v3 du travail original est accompagnée de mentions distinctes pour les éléments tiers.
+
+- Les 14 scénarios du moteur réussissent à nouveau ; les activités et le dialogue SCORM ne sont pas modifiés par cet ajout de documentation et de mentions légales.
+- Les 5 tests de paquetage réussissent, dont un contrôle des deux notices légales et un refus de produire une distribution si la licence manque.
+- Les 4 tests du contrôle DCO réussissent. Les anciens commits ne sont pas réécrits ; les nouvelles pull requests vérifient les attestations de leurs propres commits.
+- Les deux manifestes restent valides selon les schémas locaux. Les chemins, exemples JavaScript et liens des guides sont contrôlés.
+- Un contrôle de style léger et sans dépendance vérifie UTF-8, les fins de ligne, le retour final et l'absence d'espaces en fin de ligne dans les fichiers originaux. Les textes de licence et les schémas tiers sont préservés.
+- Le ZIP contient désormais 11 fichiers : les 9 fichiers SCORM précédents et `LICENSE.md` ainsi que `THIRD_PARTY_NOTICES.md`. Les livres ADL, guides, tests et outils restent hors de cette archive.
+- Le workflow GitHub Actions prépare les mêmes vérifications et conserve le ZIP en artefact téléchargeable. Son résultat réel se consulte dans l'onglet Actions du dépôt ; ce document ne remplace pas ce résultat.
+
+Le ZIP, les captures et les extractions de texte automatiques cessent d'être suivis dans les nouveaux commits. Ils restent sur le disque lorsqu'ils existaient déjà. La capture historique `tests/apercu-capsule.png` est donc une preuve locale conservée, pas un fichier requis pour exécuter les tests dans un clone neuf. Les PDF ADL et les schémas originaux restent versionnés comme références documentaires.
+
 ## Réorganisation du dépôt : contrôles du 2 novembre 2026
 
 La capsule se trouve dans `src/`, les guides dans `doc/` et le paquetage généré dans `dist/`. Les exemples, tests, outils et références restent en dehors du ZIP LMS.
@@ -50,9 +64,11 @@ node --check src/scorm_api_wrapper.js
 node --check src/demo.js
 node tests/scorm.test.cjs
 python tests/package_test.py
-python tools/check-content.py
+python tests/dco_test.py
+python tools/check-style.py
 powershell -NoProfile -File tools/validate.ps1
 python tools/package.py
+python tools/check-content.py
 ```
 
 Pour le banc d'essai de navigateur, lancez un serveur local puis ouvrez :
